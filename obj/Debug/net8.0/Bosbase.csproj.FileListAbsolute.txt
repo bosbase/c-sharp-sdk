@@ -1,0 +1,5 @@
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.GeneratedMSBuildEditorConfig.editorconfig
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.AssemblyInfoInputs.cache
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.AssemblyInfo.cs
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.csproj.CoreCompileInputs.cache
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.sourcelink.json
