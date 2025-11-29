@@ -1,9 +1,10 @@
 # Register Existing SQL Tables with the C# SDK
 
-Use the SQL table helpers to expose existing tables (or run SQL to create them) and automatically generate REST collections. Both calls are **superuser-only**.
+Use the SQL table helpers on `client.Collections` to expose existing tables (or run SQL to create them) and automatically generate REST collections. Both calls are **superuser-only**.
 
 - `RegisterSqlTablesAsync(tables: string[])` – map existing tables to collections without running SQL.
 - `ImportSqlTablesAsync(tables: SqlTableDefinition[])` – optionally run SQL to create tables first, then register them. Returns `{ created, skipped }`.
+- `SqlTableDefinition` is a helper record that packages a table name and optional SQL string.
 
 ## Requirements
 
@@ -51,27 +52,23 @@ var collections = await client.Collections.RegisterSqlTablesAsync(
 
 ```csharp
 using Bosbase;
+using Bosbase.Models;
 
 var client = new BosbaseClient("http://localhost:8090");
 await client.Collection("_superusers").AuthWithPasswordAsync("admin@example.com", "password");
 
 var tables = new[]
 {
-    new Dictionary<string, object?>
-    {
-        ["name"] = "legacy_orders",
-        ["sql"] = @"
+    new SqlTableDefinition(
+        Name: "legacy_orders",
+        Sql: @"
             CREATE TABLE IF NOT EXISTS legacy_orders (
                 id TEXT PRIMARY KEY,
                 customer_email TEXT NOT NULL
             );
         "
-    },
-    new Dictionary<string, object?>
-    {
-        ["name"] = "reporting_view"
-        // assumes table already exists
-    }
+    ),
+    new SqlTableDefinition(Name: "reporting_view") // assumes table already exists
 };
 
 var result = await client.Collections.ImportSqlTablesAsync(tables);
@@ -111,4 +108,3 @@ if (result["skipped"] is List<object?> skipped)
 
 - [Collection API](./COLLECTION_API.md) - Collection management
 - [API Rules](./API_RULES_AND_FILTERS.md) - API rules and filters
-

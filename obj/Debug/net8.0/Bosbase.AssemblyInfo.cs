@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bosbase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8435094fc280cee6b538c57c73161924fb0c232c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad8e6e101cf6ad1e68e8a6981173588cab3ff650")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bosbase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bosbase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

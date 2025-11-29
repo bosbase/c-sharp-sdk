@@ -3,3 +3,10 @@
 /home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.AssemblyInfo.cs
 /home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.csproj.CoreCompileInputs.cache
 /home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.sourcelink.json
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/bin/Debug/net8.0/Bosbase.deps.json
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/bin/Debug/net8.0/Bosbase.dll
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/bin/Debug/net8.0/Bosbase.pdb
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.dll
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/refint/Bosbase.dll
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/Bosbase.pdb
+/home/darkmoon/Documents/rbosbase/c-sharp-sdk/obj/Debug/net8.0/ref/Bosbase.dll

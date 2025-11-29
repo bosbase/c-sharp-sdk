@@ -72,6 +72,7 @@ public class BosbaseClient : IDisposable
     public LangChaingoService LangChaingo { get; }
     public CacheService Caches { get; }
     public GraphQLService Graphql { get; }
+    public SqlService Sql { get; }
 
     public BosbaseClient(string baseUrl, string lang = "en-US", AuthStore? authStore = null, HttpClient? httpClient = null)
     {
@@ -95,6 +96,7 @@ public class BosbaseClient : IDisposable
         LangChaingo = new LangChaingoService(this);
         Caches = new CacheService(this);
         Graphql = new GraphQLService(this);
+        Sql = new SqlService(this);
     }
 
     public RecordService Collection(string collectionIdOrName)

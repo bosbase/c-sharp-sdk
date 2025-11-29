@@ -290,7 +290,8 @@ public class RealtimeService : BaseService
                     buffer["event"] = string.IsNullOrWhiteSpace(value) ? "message" : value;
                     break;
                 case "data":
-                    buffer["data"] = DictionaryExtensions.SafeGet(buffer, "data") + value + "\n";
+                    buffer.TryGetValue("data", out var existing);
+                    buffer["data"] = (existing ?? string.Empty) + value + "\n";
                     break;
                 case "id":
                     buffer["id"] = value;
@@ -301,8 +302,11 @@ public class RealtimeService : BaseService
 
     private void DispatchEvent(Dictionary<string, string> evt)
     {
-        var name = DictionaryExtensions.SafeGet(evt, "event") ?? "message";
-        var dataStr = (DictionaryExtensions.SafeGet(evt, "data") ?? string.Empty).TrimEnd('\n');
+        evt.TryGetValue("event", out var eventName);
+        var name = string.IsNullOrWhiteSpace(eventName) ? "message" : eventName;
+
+        evt.TryGetValue("data", out var dataValue);
+        var dataStr = (dataValue ?? string.Empty).TrimEnd('\n');
         Dictionary<string, object?> payload;
         if (!string.IsNullOrWhiteSpace(dataStr))
         {
@@ -322,7 +326,8 @@ public class RealtimeService : BaseService
 
         if (name == "PB_CONNECT")
         {
-            ClientId = DictionaryExtensions.SafeGet(payload, "clientId")?.ToString() ?? DictionaryExtensions.SafeGet(evt, "id") ?? string.Empty;
+            evt.TryGetValue("id", out var eventId);
+            ClientId = DictionaryExtensions.SafeGet(payload, "clientId")?.ToString() ?? eventId ?? string.Empty;
             _readyTcs?.TrySetResult(true);
             _ = SubmitSubscriptionsAsync();
             OnDisconnect?.Invoke(new List<string>()); // signal reconnect completed

@@ -1,3 +1,4 @@
+using Bosbase.Models;
 using Bosbase.Utils;
 
 namespace Bosbase.Services;
@@ -50,6 +51,58 @@ public class CollectionService : BaseCrudService
             $"{BaseCrudPath}/import",
             new SendOptions { Method = HttpMethod.Put, Body = payload, Query = query, Headers = headers },
             cancellationToken);
+    }
+
+    public async Task<List<Dictionary<string, object?>>> RegisterSqlTablesAsync(
+        IEnumerable<string> tables,
+        IDictionary<string, object?>? body = null,
+        IDictionary<string, object?>? query = null,
+        IDictionary<string, string>? headers = null,
+        CancellationToken cancellationToken = default)
+    {
+        var tableList = tables?.Where(t => !string.IsNullOrWhiteSpace(t)).Select(t => t!).ToList() ?? new List<string>();
+        if (!tableList.Any())
+        {
+            throw new ArgumentException("At least one table name is required.", nameof(tables));
+        }
+
+        var payload = new Dictionary<string, object?>(body ?? new Dictionary<string, object?>())
+        {
+            ["tables"] = tableList
+        };
+
+        var data = await Client.SendAsync<List<Dictionary<string, object?>>?>(
+            $"{BaseCrudPath}/sql/tables",
+            new SendOptions { Method = HttpMethod.Post, Body = payload, Query = query, Headers = headers },
+            cancellationToken);
+
+        return data?.ToList() ?? new List<Dictionary<string, object?>>();
+    }
+
+    public async Task<SqlTableImportResult> ImportSqlTablesAsync(
+        IEnumerable<SqlTableDefinition> tables,
+        IDictionary<string, object?>? body = null,
+        IDictionary<string, object?>? query = null,
+        IDictionary<string, string>? headers = null,
+        CancellationToken cancellationToken = default)
+    {
+        var tableDefinitions = tables?.ToList() ?? new List<SqlTableDefinition>();
+        if (!tableDefinitions.Any())
+        {
+            throw new ArgumentException("At least one table definition is required.", nameof(tables));
+        }
+
+        var payload = new Dictionary<string, object?>(body ?? new Dictionary<string, object?>())
+        {
+            ["tables"] = tableDefinitions.Select(t => t.ToDictionary()).ToList()
+        };
+
+        var data = await Client.SendAsync<Dictionary<string, object?>>(
+            $"{BaseCrudPath}/sql/import",
+            new SendOptions { Method = HttpMethod.Post, Body = payload, Query = query, Headers = headers },
+            cancellationToken);
+
+        return SqlTableImportResult.FromDictionary(data);
     }
 
     public Task<Dictionary<string, object?>> GetScaffoldsAsync(
